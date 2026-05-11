@@ -8,7 +8,9 @@ func NewFileStorage(path string) *FileStorage {
 	// Проверить существует ли такой файл
 	// Если нет, создать, если да - открыть
 	// Вернуть структуру с заполненым путем
-	return &FileStorage{}
+	return &FileStorage{
+		path: path,
+	}
 }
 
 func (file FileStorage) Save(task_to_save []Task) error {
