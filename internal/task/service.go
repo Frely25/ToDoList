@@ -17,7 +17,7 @@ func NewService() Service {
 	storage := NewFileStorage("../../data/tasks.json")
 	history := history.NewHistory("../../data/history.log")
 	tasks, nextId, error := storage.Load() // Загружаем все задачи из файла
-	if error != nil {
+	if error == nil {
 		return Service{
 			tasks:   tasks,
 			storage: storage,
