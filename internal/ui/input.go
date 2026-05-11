@@ -1,9 +1,11 @@
 package ui
 
-import "fmt"
+func ReadInt() (int, error) {
 
-func ReadInt() int {
-	a := 5
-	fmt.Print(a)
-	return 0
+	return 0, nil
+}
+
+func ReadLine() string {
+
+	return ""
 }
