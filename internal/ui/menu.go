@@ -66,7 +66,18 @@ func Menu() {
 				}
 			case 4:
 				// Показать список задач
-				fmt.Print("Список всех задач: \n")
+				fmt.Print("Список всех задач: \n" +
+					"ID\tTitle\t\t\tCompleted")
+				for _, value := range ser.GetTasks() {
+					fmt.Println("==========================================")
+					fmt.Printf("%d\t", value.ID)
+					fmt.Printf("%s\t\t\t", value.Title)
+					sm := "✗"
+					if value.Completed {
+						sm = "✓"
+					}
+					fmt.Println(sm)
+				}
 			case 5:
 				// Посмотреть изменения
 			case 6:
