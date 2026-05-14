@@ -7,8 +7,12 @@ import (
 
 var ser task.Service
 
-func Welcome() {
+func init() {
 	ser = task.NewService()
+	// Реализовать проверку создания сервиса и его работоспособности
+}
+
+func Welcome() {
 	fmt.Print("Добро пожаловать в программу-помощник ToDoList!\n\n\n")
 }
 
@@ -80,6 +84,17 @@ func Menu() {
 				}
 			case 5:
 				// Посмотреть изменения
+				fmt.Print("История изменений: \n")
+				history, err := ser.GetHistory()
+				if err != nil {
+					fmt.Printf("Ошибка: %s\n\n", err)
+				} else {
+					for _, value := range history {
+						fmt.Println("==========================================")
+						fmt.Println(value)
+					}
+					fmt.Print("\n\n")
+				}
 			case 6:
 				fmt.Println("Вы успешно вышли из программы")
 				isLive = false
