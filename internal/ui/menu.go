@@ -82,6 +82,7 @@ func Menu() {
 					}
 					fmt.Println(sm)
 				}
+				fmt.Print("\n\n")
 			case 5:
 				// Посмотреть изменения
 				fmt.Print("История изменений: \n")

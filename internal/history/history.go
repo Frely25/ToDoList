@@ -30,7 +30,7 @@ func NewHistory(path string) *History {
 
 func (h History) Log(message string) error {
 	// Логгируем в формате [время дата] действие объект
-	file, err := os.OpenFile(h.path, os.O_APPEND, 0644)
+	file, err := os.OpenFile(h.path, os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		return errors.New("Failed to open history log: " + err.Error()) // Возвращаем ошибку, если не удалось открыть файл
 	}
@@ -50,7 +50,7 @@ func (h History) GetHistory() ([]string, error) {
 	defer file.Close()
 	var history []string
 	scanner := bufio.NewScanner(file) // Сканируем файл построчно и добавляем каждую строку в срез history
-	for scanner.Scan() {
+	for scanner.Scan() {              // Сканируем файл построчно
 		history = append(history, scanner.Text())
 	}
 	if err := scanner.Err(); err != nil {
