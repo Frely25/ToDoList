@@ -83,3 +83,7 @@ func (ser *Service) DeleteTask(id int) error {
 func (ser *Service) GetTasks() []Task {
 	return ser.tasks
 }
+
+func (ser *Service) GetHistory() ([]string, error) {
+	return ser.history.GetHistory()
+}
