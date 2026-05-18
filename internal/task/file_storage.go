@@ -30,6 +30,7 @@ func NewFileStorage(path string) *FileStorage {
 
 func (file FileStorage) Save(task_to_save []Task) error {
 	// Marshal
+
 	// запись в файл
 	return nil
 }
