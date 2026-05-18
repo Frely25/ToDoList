@@ -10,12 +10,6 @@ const path_to_data string = "../../data/"
 
 func NewFileStorage(path string) *FileStorage {
 	// Проверить существует ли такой файл
-<<<<<<< HEAD
-	// Если нет, создать, если да - открыть
-	// Вернуть структуру с заполненым путем
-	return &FileStorage{
-		path: path,
-=======
 	if path == "" {
 		path = path_to_data + "tasks.json"
 	}
@@ -31,7 +25,6 @@ func NewFileStorage(path string) *FileStorage {
 	defer file.Close()
 	return &FileStorage{ // Вернуть структуру с заполненым путем
 		path: path_to_data + path,
->>>>>>> origin/ui
 	}
 }
 
