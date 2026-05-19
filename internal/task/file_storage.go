@@ -1,6 +1,9 @@
 package task
 
-import "os"
+import (
+	"encoding/json"
+	"os"
+)
 
 type FileStorage struct {
 	path string
@@ -30,8 +33,15 @@ func NewFileStorage(path string) *FileStorage {
 
 func (file FileStorage) Save(task_to_save []Task) error {
 	// Marshal
-
+	jsonObj, err := json.MarshalIndent(task_to_save, "", "	")
+	if err != nil {
+		return err
+	}
 	// запись в файл
+	err = os.WriteFile(path_to_data+file.path, jsonObj, 0644)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
