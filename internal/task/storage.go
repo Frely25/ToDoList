@@ -1,6 +1,6 @@
 package task
 
 type Storage interface {
-	Save([]Task) error
+	Save([]Task, int) error
 	Load() ([]Task, int, error) // Задачи, счетсчик ID, ошибка
 }
