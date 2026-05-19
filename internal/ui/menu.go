@@ -141,6 +141,19 @@ func menu() {
 					}
 					fmt.Print("\n\n")
 				}
+			case 7:
+				// Очистить историю
+				fmt.Print("Вы хотите очистить историю изменений?(Y/N)\n" +
+					"--->")
+				ans := strings.ToLower(readLine())
+				if ans == "y" {
+					if ser.ClearHistory() {
+						fmt.Print("История успешно очищена")
+					} else {
+						fmt.Print("Что-то пошло не так, ререзапустить программу и еще раз попробуйте!")
+					}
+				}
+				fmt.Print("\n\n")
 			case 8:
 				fmt.Println("Вы успешно вышли из программы")
 				isLive = false
