@@ -12,7 +12,7 @@ type History struct {
 	path string
 }
 
-const path_to_data string = "build/"
+const path_to_data string = "data/"
 
 func NewHistory(path string) *History {
 	if path == "" {

@@ -23,6 +23,8 @@ func NewFileStorage(path_to_tasks, path_to_nextId string) *FileStorage {
 	if path_to_nextId == "" {
 		path_to_nextId = path_to_data + "config.txt"
 	}
+	path_to_tasks = path_to_data + path_to_tasks
+	path_to_nextId = path_to_data + path_to_nextId
 	// Я думаю, можно сделать через цикл:
 	var file *os.File
 	var err error
