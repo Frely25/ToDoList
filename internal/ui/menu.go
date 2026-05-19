@@ -71,17 +71,21 @@ func menu() {
 				}
 			case 4:
 				// Показать список задач
-				fmt.Print("Список всех задач: \n" +
-					"ID\tTitle\t\t\tCompleted")
-				for _, value := range ser.GetTasks() {
-					fmt.Println("==========================================")
-					fmt.Printf("%d\t", value.ID)
-					fmt.Printf("%s\t\t\t", value.Title)
-					sm := "✗"
-					if value.Completed {
-						sm = "✓"
+				if len(ser.GetTasks()) == 0 {
+					fmt.Print("Список задач - " + "\033[1m" + "пуст" + "\033[0m")
+				} else {
+					fmt.Print("Список всех задач: \n" +
+						"ID\tTitle\t\t\tCompleted")
+					for _, value := range ser.GetTasks() {
+						fmt.Println("==========================================")
+						fmt.Printf("%d\t", value.ID)
+						fmt.Printf("%s\t\t\t", value.Title)
+						sm := "✗"
+						if value.Completed {
+							sm = "✓"
+						}
+						fmt.Println(sm)
 					}
-					fmt.Println(sm)
 				}
 				fmt.Print("\n\n")
 			case 5:
