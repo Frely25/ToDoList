@@ -105,4 +105,5 @@ func menu() {
 			}
 		}
 	}
+	ser.Completion()
 }

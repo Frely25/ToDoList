@@ -16,6 +16,7 @@ type Service struct {
 func NewService() Service {
 	storage := NewFileStorage("tasks.json", "config.txt")
 	history := history.NewHistory("history.log")
+	history.Log("Application is starting")
 	tasks, nextId, error := storage.Load() // Загружаем все задачи из файла
 	if error == nil {
 		return Service{
@@ -86,4 +87,9 @@ func (ser *Service) GetTasks() []Task {
 
 func (ser *Service) GetHistory() ([]string, error) {
 	return ser.history.GetHistory()
+}
+
+func (ser *Service) Completion() {
+	ser.storage.Save(ser.tasks, ser.nextId)
+	ser.history.Log("Application has shut down")
 }
