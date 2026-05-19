@@ -55,7 +55,7 @@ func (file FileStorage) Save(task_to_save []Task, nextId_to_save int) error {
 		return err
 	}
 	//  запись в файл айдишника
-	err = os.WriteFile(file.path_to_nextId, []byte(fmt.Sprintf("temp %d", nextId_to_save)), 0644)
+	err = os.WriteFile(file.path_to_nextId, []byte(fmt.Sprintf("%d", nextId_to_save)), 0644)
 	if err != nil {
 		return err
 	}
