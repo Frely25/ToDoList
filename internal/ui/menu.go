@@ -94,13 +94,15 @@ func menu() {
 				history, err := ser.GetHistory()
 				if err != nil {
 					fmt.Printf("Ошибка: %s\n\n", err)
+				} else if len(history) == 0 {
+					fmt.Print("Список лог - " + "\033[1m" + "пуст" + "\033[0m")
 				} else {
 					for _, value := range history {
 						fmt.Println("==========================================")
 						fmt.Println(value)
 					}
-					fmt.Print("\n\n")
 				}
+				fmt.Print("\n\n")
 			case 6:
 				fmt.Println("Вы успешно вышли из программы")
 				isLive = false
