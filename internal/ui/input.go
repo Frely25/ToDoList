@@ -10,7 +10,7 @@ import (
 
 var reader = bufio.NewReader(os.Stdin)
 
-func ReadInt() (int, error) {
+func readInt() (int, error) {
 	input, err := reader.ReadString('\n') // Читаем строку до символа новой строки
 	if err != nil {                       // Если произошла ошибка при чтении, возвращаем её
 		return 0, err
@@ -22,7 +22,7 @@ func ReadInt() (int, error) {
 	return 0, errors.New("invalid input: not an integer") // Если преобразование не удалось, возвращаем 0 и ошибку
 }
 
-func ReadLine() string {
+func readLine() string {
 	input, err := reader.ReadString('\n') // Читаем строку до символа новой строки
 	if err != nil {                       // Если произошла ошибка при чтении, возвращаем пустую строку
 		return ""

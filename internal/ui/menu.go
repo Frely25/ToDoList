@@ -7,15 +7,17 @@ import (
 
 var ser task.Service
 
-func init() {
+func Init_to_service() {
+	welcome()
 	ser = task.NewService()
+	menu()
 }
 
-func Welcome() {
+func welcome() {
 	fmt.Print("Добро пожаловать в программу-помощник ToDoList!\n\n\n")
 }
 
-func Menu() {
+func menu() {
 	isLive := true   // Отвечает за работу программы
 	var title string // Переменная для ввода названий
 	for isLive {
@@ -27,7 +29,7 @@ func Menu() {
 			"\t5 - Посмотреть историю\n" +
 			"\t6 - Выйти\n" +
 			"--->")
-		choose, err := ReadInt()
+		choose, err := readInt()
 		if err != nil {
 			fmt.Printf("Вы допустили ошибку!\nОшибка: %s", err)
 		} else {
@@ -35,7 +37,7 @@ func Menu() {
 			case 1:
 				// Добавить задачу
 				fmt.Print("Введите название задачи: ")
-				title = ReadLine()
+				title = readLine()
 				if err := ser.AddTask(title); err != nil {
 					fmt.Printf("Ошибка: %s\n\n", err)
 				} else {
@@ -44,7 +46,7 @@ func Menu() {
 			case 2:
 				// Отметить задачу
 				fmt.Print("Введите ID задачи, которую хотите отметить: ")
-				id, errInt := ReadInt()
+				id, errInt := readInt()
 				if errInt != nil {
 					fmt.Printf("Ошибка: %s\n\n", errInt)
 				} else {
@@ -57,7 +59,7 @@ func Menu() {
 			case 3:
 				// Удалить задачу
 				fmt.Print("Введите ID задачи, которую хотите удалить: ")
-				id, errInt := ReadInt()
+				id, errInt := readInt()
 				if errInt != nil {
 					fmt.Printf("Ошибка: %s\n\n", errInt)
 				} else {
