@@ -75,7 +75,7 @@ func menu() {
 					fmt.Print("Список задач - " + "\033[1m" + "пуст" + "\033[0m")
 				} else {
 					fmt.Print("Список всех задач: \n" +
-						"ID\tTitle\t\t\tCompleted")
+						"ID\tTitle\t\t\tCompleted\n")
 					for _, value := range ser.GetTasks() {
 						fmt.Println("==========================================")
 						fmt.Printf("%d\t", value.ID)
