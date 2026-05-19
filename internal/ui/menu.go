@@ -9,7 +9,6 @@ var ser task.Service
 
 func init() {
 	ser = task.NewService()
-	// Реализовать проверку создания сервиса и его работоспособности
 }
 
 func Welcome() {
