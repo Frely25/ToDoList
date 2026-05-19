@@ -90,3 +90,15 @@ func (file FileStorage) loadNextId() (int, error) {
 	data_str := strings.TrimSpace(string(obj))
 	return strconv.Atoi(data_str) // Возвращаем счетсчик для id
 }
+
+func (file FileStorage) clearTasks() error {
+	err := os.WriteFile(file.path_to_tasks, []byte(""), 0644)
+	if err != nil {
+		return err
+	}
+	err = os.WriteFile(file.path_to_nextId, []byte(""), 0644)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -12,10 +12,13 @@ type History struct {
 	path string
 }
 
+const path_to_data string = "build/"
+
 func NewHistory(path string) *History {
 	if path == "" {
 		path = "history.log"
 	}
+	path = path_to_data + path
 	file, err := os.Open(path) // Проверяем, существует ли файл
 	if err != nil {
 		// Если файл не существует, создаем его
@@ -57,4 +60,11 @@ func (h History) GetHistory() ([]string, error) {
 		return nil, errors.New("Failed to read history log: " + err.Error()) // Возвращаем ошибку, если не удалось прочитать файл
 	}
 	return history, nil
+}
+
+func (h History) ClearHistory() error {
+	if err := os.WriteFile(h.path, []byte("History is reset"), 0644); err != nil {
+		return err
+	}
+	return nil
 }

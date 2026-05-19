@@ -89,6 +89,23 @@ func (ser *Service) GetHistory() ([]string, error) {
 	return ser.history.GetHistory()
 }
 
+func (ser *Service) ClearListOfTask() bool {
+	if err := ser.storage.clearTasks(); err == nil {
+		ser.tasks = []Task{}
+		ser.nextId = 0
+		return false
+	}
+	ser.history.Log("List of tasks is clear")
+	return true
+}
+
+func (ser *Service) ClearHistory() bool {
+	if ser.history.ClearHistory() != nil {
+		return false
+	}
+	return true
+}
+
 func (ser *Service) Completion() {
 	ser.storage.Save(ser.tasks, ser.nextId)
 	ser.history.Log("Application has shut down")

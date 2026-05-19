@@ -3,6 +3,7 @@ package ui
 import (
 	"ToDoList/internal/task"
 	"fmt"
+	"strings"
 )
 
 var ser task.Service
@@ -27,7 +28,9 @@ func menu() {
 			"\t3 - Удалить задачу\n" +
 			"\t4 - Показать задачи\n" +
 			"\t5 - Посмотреть историю\n" +
-			"\t6 - Выйти\n" +
+			"\t6 - Очистить полностью список задач" +
+			"\t7 - Очистить логи" +
+			"\t8 - Выйти\n" +
 			"--->")
 		choose, err := readInt()
 		if err != nil {
@@ -112,8 +115,36 @@ func menu() {
 				}
 				fmt.Print("\n\n")
 			case 6:
+				//Очистить список задач
+				fmt.Print("Вы хотите удалить все сохраненные задачи?\n" +
+					"Удалить все задачи без возможности восстановления (Y/N): ")
+				answer := strings.ToLower(readLine())
+				if answer == "y" {
+					isAgree := false
+					for i := 0; i < 5; i++ {
+						fmt.Print("Для подтвержедения удаления введите \"Удалить все\" или \"Отмена\" для отмены удаления\n--->")
+						answer = readLine()
+						if strings.ToLower(answer) == "отмена" {
+							break
+						} else if answer == "Удалить все" {
+							isAgree = true
+							break
+						}
+					}
+
+					if isAgree {
+						if ser.ClearListOfTask() {
+							fmt.Print("Вы успешно полностью очистили список задач")
+						} else {
+							fmt.Print("Что-то пошло не так, если все же хотите удалить список задач, то попробуйте перезайти в приложение и заного попробовать")
+						}
+					}
+					fmt.Print("\n\n")
+				}
+			case 8:
 				fmt.Println("Вы успешно вышли из программы")
 				isLive = false
+
 			default:
 				fmt.Print("Вы ввели не существующий пункт меню!\n\n")
 			}
