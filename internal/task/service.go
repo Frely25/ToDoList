@@ -14,8 +14,8 @@ type Service struct {
 }
 
 func NewService() Service {
-	storage := NewFileStorage("../../data/tasks.json")
-	history := history.NewHistory("../../data/history.log")
+	storage := NewFileStorage("tasks.json", "config.txt")
+	history := history.NewHistory("history.log")
 	tasks, nextId, error := storage.Load() // Загружаем все задачи из файла
 	if error == nil {
 		return Service{
