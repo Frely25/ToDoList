@@ -1,5 +1,5 @@
 Notes.txt
 build/./app
-build/config.txt
-build/history.log
-build/tasks.json
+build/data/config.txt
+build/data/history.log
+build/data/tasks.json
