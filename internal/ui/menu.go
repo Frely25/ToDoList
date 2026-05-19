@@ -45,28 +45,36 @@ func menu() {
 				}
 			case 2:
 				// Отметить задачу
-				fmt.Print("Введите ID задачи, которую хотите отметить: ")
-				id, errInt := readInt()
-				if errInt != nil {
-					fmt.Printf("Ошибка: %s\n\n", errInt)
+				if len(ser.GetTasks()) == 0 {
+					fmt.Print("Список задач - " + "\033[1m" + "пуст" + "\033[0m\n\n")
 				} else {
-					if err := ser.CompleteTask(id); err != nil {
-						fmt.Printf("Ошибка: %s\n\n", err)
+					fmt.Print("Введите ID задачи, которую хотите отметить: ")
+					id, errInt := readInt()
+					if errInt != nil {
+						fmt.Printf("Ошибка: %s\n\n", errInt)
 					} else {
-						fmt.Print("Задача успешно отмечена\n\n")
+						if err := ser.CompleteTask(id); err != nil {
+							fmt.Printf("Ошибка: %s\n\n", err)
+						} else {
+							fmt.Print("Задача успешно отмечена\n\n")
+						}
 					}
 				}
 			case 3:
 				// Удалить задачу
-				fmt.Print("Введите ID задачи, которую хотите удалить: ")
-				id, errInt := readInt()
-				if errInt != nil {
-					fmt.Printf("Ошибка: %s\n\n", errInt)
+				if len(ser.GetTasks()) == 0 {
+					fmt.Print("Список задач - " + "\033[1m" + "пуст" + "\033[0m\n\n")
 				} else {
-					if err := ser.DeleteTask(id); err != nil {
-						fmt.Printf("Ошибка: %s\n\n", err)
+					fmt.Print("Введите ID задачи, которую хотите удалить: ")
+					id, errInt := readInt()
+					if errInt != nil {
+						fmt.Printf("Ошибка: %s\n\n", errInt)
 					} else {
-						fmt.Print("Задача успешно удалена\n\n")
+						if err := ser.DeleteTask(id); err != nil {
+							fmt.Printf("Ошибка: %s\n\n", err)
+						} else {
+							fmt.Print("Задача успешно удалена\n\n")
+						}
 					}
 				}
 			case 4:
@@ -95,7 +103,7 @@ func menu() {
 				if err != nil {
 					fmt.Printf("Ошибка: %s\n\n", err)
 				} else if len(history) == 0 {
-					fmt.Print("Список лог - " + "\033[1m" + "пуст" + "\033[0m")
+					fmt.Print("Список логов - " + "\033[1m" + "пуст" + "\033[0m")
 				} else {
 					for _, value := range history {
 						fmt.Println("==========================================")
