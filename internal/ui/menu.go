@@ -63,12 +63,14 @@ func menu() {
 							if task.GetCompleted() {
 								fmt.Println("Задача уже отмечена")
 							} else {
-								ser.CompleteTask(id)
-								fmt.Print("Задача успешно отмечена\n\n")
+								ser.CompleteTaskToTask(task)
+								fmt.Print("Задача успешно отмечена")
+								fmt.Printf("Значение completed у копии %v", task.GetCompleted())
 							}
 						}
 					}
 				}
+				fmt.Print("\n\n")
 			case 3:
 				// Удалить задачу
 				if len(ser.GetTasks()) == 0 {

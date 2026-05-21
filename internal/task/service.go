@@ -68,6 +68,10 @@ func (ser *Service) CompleteTask(id int) error {
 	return errors.New("Index not found")
 }
 
+func (ser *Service) CompleteTaskToTask(task *Task) {
+	task.Completed = true
+}
+
 // Метод для удаления задачи
 func (ser *Service) DeleteTask(id int) error {
 	for i := range ser.tasks {
@@ -111,11 +115,11 @@ func (ser *Service) Completion() {
 	ser.history.Log("Application has shut down")
 }
 
-func (ser *Service) GetTaskToID(id int) (Task, error) {
+func (ser *Service) GetTaskToID(id int) (*Task, error) {
 	for i := range ser.tasks {
 		if ser.tasks[i].ID == id {
-			return ser.tasks[i], nil
+			return &ser.tasks[i], nil
 		}
 	}
-	return Task{}, errors.New("Task not found")
+	return &Task{}, errors.New("Task not found")
 }
