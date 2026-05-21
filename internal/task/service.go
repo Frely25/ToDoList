@@ -93,10 +93,10 @@ func (ser *Service) ClearListOfTask() bool {
 	if err := ser.storage.clearTasks(); err == nil {
 		ser.tasks = []Task{}
 		ser.nextId = 0
-		return false
+		ser.history.Log("List of tasks is clear")
+		return true
 	}
-	ser.history.Log("List of tasks is clear")
-	return true
+	return false
 }
 
 func (ser *Service) ClearHistory() bool {
