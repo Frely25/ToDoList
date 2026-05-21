@@ -110,3 +110,12 @@ func (ser *Service) Completion() {
 	ser.storage.Save(ser.tasks, ser.nextId)
 	ser.history.Log("Application has shut down")
 }
+
+func (ser *Service) GetTaskToID(id int) (Task, error) {
+	for i := range ser.tasks {
+		if ser.tasks[i].ID == id {
+			return ser.tasks[i], nil
+		}
+	}
+	return Task{}, errors.New("Task not found")
+}

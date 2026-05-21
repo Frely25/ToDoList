@@ -56,10 +56,16 @@ func menu() {
 					if errInt != nil {
 						fmt.Printf("Ошибка: %s\n\n", errInt)
 					} else {
-						if err := ser.CompleteTask(id); err != nil {
-							fmt.Printf("Ошибка: %s\n\n", err)
+						task, err := ser.GetTaskToID(id)
+						if err != nil {
+							fmt.Printf("Error: %s", err)
 						} else {
-							fmt.Print("Задача успешно отмечена\n\n")
+							if task.GetCompleted() {
+								fmt.Println("Задача уже отмечена")
+							} else {
+								ser.CompleteTask(id)
+								fmt.Print("Задача успешно отмечена\n\n")
+							}
 						}
 					}
 				}

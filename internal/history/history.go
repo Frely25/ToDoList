@@ -63,7 +63,7 @@ func (h History) GetHistory() ([]string, error) {
 }
 
 func (h History) ClearHistory() error {
-	if err := os.WriteFile(h.path, []byte("History is reset"), 0644); err != nil {
+	if err := os.WriteFile(h.path, []byte("History is reset\n"), 0644); err != nil {
 		return err
 	}
 	return nil
