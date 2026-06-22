@@ -59,13 +59,17 @@ func (ser *Service) CompleteTask(id int) error {
 	for i := 0; i < len(ser.tasks); i++ {
 		// Проверям по id
 		if ser.tasks[i].ID == id {
-			ser.tasks[i].Completed = true                       // Помечаем задачу как выполненную
-			mess := fmt.Sprintf("Complete Task %d", ser.nextId) // Создаем сообщение для логгирования
-			ser.history.Log(mess)                               // Логгируем
+			ser.tasks[i].Completed = true               // Помечаем задачу как выполненную
+			mess := fmt.Sprintf("Complete Task %d", id) // Создаем сообщение для логгирования
+			ser.history.Log(mess)                       // Логгируем
 			return nil
 		}
 	}
 	return errors.New("Index not found")
+}
+
+func (ser *Service) CompleteTaskToTask(task *Task) {
+	task.Completed = true
 }
 
 // Метод для удаления задачи
@@ -73,7 +77,7 @@ func (ser *Service) DeleteTask(id int) error {
 	for i := range ser.tasks {
 		if ser.tasks[i].ID == id {
 			ser.tasks = append(ser.tasks[:i], ser.tasks[i+1:]...) // Удаление элмента
-			mess := fmt.Sprintf("Delete Task %d", ser.nextId)     // Создаем сообщение для логгирования
+			mess := fmt.Sprintf("Delete Task %d", id)             // Создаем сообщение для логгирования
 			ser.history.Log(mess)                                 // Логгируем
 			return nil
 		}
@@ -93,10 +97,10 @@ func (ser *Service) ClearListOfTask() bool {
 	if err := ser.storage.clearTasks(); err == nil {
 		ser.tasks = []Task{}
 		ser.nextId = 0
-		return false
+		ser.history.Log("List of tasks is clear")
+		return true
 	}
-	ser.history.Log("List of tasks is clear")
-	return true
+	return false
 }
 
 func (ser *Service) ClearHistory() bool {
@@ -109,4 +113,13 @@ func (ser *Service) ClearHistory() bool {
 func (ser *Service) Completion() {
 	ser.storage.Save(ser.tasks, ser.nextId)
 	ser.history.Log("Application has shut down")
+}
+
+func (ser *Service) GetTaskToID(id int) (*Task, error) {
+	for i := range ser.tasks {
+		if ser.tasks[i].ID == id {
+			return &ser.tasks[i], nil
+		}
+	}
+	return &Task{}, errors.New("Task not found")
 }

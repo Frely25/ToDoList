@@ -1,0 +1,20 @@
+<<<<<<< HEAD
+=======
+[
+	{
+		"ID": 0,
+		"Title": "qwe",
+		"Completed": true
+	},
+	{
+		"ID": 1,
+		"Title": "ewq",
+		"Completed": false
+	},
+	{
+		"ID": 2,
+		"Title": "weq",
+		"Completed": false
+	}
+]
+>>>>>>> 47924c14e0b07a4dc927a0ffbe81f3cfd4061063

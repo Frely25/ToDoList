@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 History is reset[19.05.2026 13:57] Application has shut down
 [19.05.2026 14:00] Application is starting
 [19.05.2026 14:00] Application has shut down
@@ -19,3 +20,19 @@ History is reset[19.05.2026 13:57] Application has shut down
 [21.05.2026 19:17] Application is starting
 [21.05.2026 19:17] Add Task 3
 [21.05.2026 19:17] Complete Task 4
+=======
+History is reset[21.05.2026 20:01] List of tasks is clear
+[21.05.2026 20:02] Application has shut down
+[21.05.2026 20:34] Application is starting
+[21.05.2026 20:34] Add Task 0
+[21.05.2026 20:34] Add Task 1
+[21.05.2026 20:34] Add Task 2
+[21.05.2026 20:35] Complete Task 0
+[21.05.2026 20:35] Application has shut down
+[21.05.2026 20:45] Application is starting
+[21.05.2026 20:46] Application is starting
+[21.05.2026 20:46] Application has shut down
+[21.05.2026 20:47] Application is starting
+[21.05.2026 20:48] Application has shut down
+[21.05.2026 20:48] Application is starting
+>>>>>>> 47924c14e0b07a4dc927a0ffbe81f3cfd4061063

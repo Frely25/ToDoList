@@ -49,24 +49,32 @@ func menu() {
 			case 2:
 				// Отметить задачу
 				if len(ser.GetTasks()) == 0 {
-					fmt.Print("Список задач - " + "\033[1m" + "пуст" + "\033[0m\n\n")
+					fmt.Print("Список задач - \033[1m пуст \033[0m")
 				} else {
 					fmt.Print("Введите ID задачи, которую хотите отметить: ")
 					id, errInt := readInt()
 					if errInt != nil {
 						fmt.Printf("Ошибка: %s\n\n", errInt)
 					} else {
-						if err := ser.CompleteTask(id); err != nil {
-							fmt.Printf("Ошибка: %s\n\n", err)
+						task, err := ser.GetTaskToID(id)
+						if err != nil {
+							fmt.Printf("Error: %s", err)
 						} else {
-							fmt.Print("Задача успешно отмечена\n\n")
+							if task.GetCompleted() {
+								fmt.Println("Задача уже отмечена")
+							} else {
+								ser.CompleteTaskToTask(task)
+								fmt.Print("Задача успешно отмечена")
+								fmt.Printf("Значение completed у копии %v", task.GetCompleted())
+							}
 						}
 					}
 				}
+				fmt.Print("\n\n")
 			case 3:
 				// Удалить задачу
 				if len(ser.GetTasks()) == 0 {
-					fmt.Print("Список задач - " + "\033[1m" + "пуст" + "\033[0m\n\n")
+					fmt.Print("Список задач - \033[1m пуст \033[0m")
 				} else {
 					fmt.Print("Введите ID задачи, которую хотите удалить: ")
 					id, errInt := readInt()
@@ -83,7 +91,7 @@ func menu() {
 			case 4:
 				// Показать список задач
 				if len(ser.GetTasks()) == 0 {
-					fmt.Print("Список задач - " + "\033[1m" + "пуст" + "\033[0m")
+					fmt.Print("Список задач - \033[1m пуст \033[0m")
 				} else {
 					fmt.Print("Список всех задач: \n" +
 						"ID\tTitle\t\t\tCompleted\n")
@@ -117,7 +125,7 @@ func menu() {
 			case 6:
 				//Очистить список задач
 				if len(ser.GetTasks()) == 0 {
-					fmt.Print("Список задач - " + "\033[1m" + "пуст" + "\033[0m\n\n")
+					fmt.Print("Список задач - \033[1m пуст \033[0m")
 				} else {
 					fmt.Print("Вы хотите удалить все сохраненные задачи?\n" +
 						"Удалить все задачи без возможности восстановления (Y/N): ")
