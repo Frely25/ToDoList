@@ -1,15 +1,19 @@
 package server
 
 import (
+	"ToDoList/internal/task"
 	"errors"
 	"net/http"
-	"slices"
+
+	//"slices"
 	"strconv"
 )
 
 type Server struct {
 	port     string
 	patterns []string
+	httpSrv  *http.Server
+	service  *task.Service
 }
 
 func NewServer(port string) (*Server, error) {
@@ -21,9 +25,13 @@ func NewServer(port string) (*Server, error) {
 		return nil, err
 	}
 	if 0 <= port_int && port_int <= 65535 {
+		ser := task.NewService()
+
 		return &Server{
 			port:     port,
 			patterns: make([]string, 1),
+			httpSrv:  &http.Server{},
+			service:  &ser,
 		}, nil
 	} else {
 		// fmt.Println("Вы ввели не корректный порт")
@@ -31,19 +39,19 @@ func NewServer(port string) (*Server, error) {
 	}
 }
 
-func (s *Server) ServerUp() error {
-	// fmt.Println("Сервер запускается...")
-	if err := http.ListenAndServe(":"+s.port, nil); err != nil {
-		// fmt.Println("Не предвиденная ошибка на сервере: ", err)
-		return err
-	}
-	return nil
-}
+// func (s *Server) ServerUp() error {
+// 	// fmt.Println("Сервер запускается...")
+// 	if err := http.ListenAndServe(":"+s.port, nil); err != nil {
+// 		// fmt.Println("Не предвиденная ошибка на сервере: ", err)
+// 		return err
+// 	}
+// 	return nil
+// }
 
-func (s *Server) AddHandle(pattern string, function func(http.ResponseWriter, *http.Request)) error {
-	if slices.Contains(s.patterns, pattern) {
-		return errors.New("Такой паттерн уже есть")
-	}
-	http.HandleFunc(pattern, function)
-	return nil
-}
+// func (s *Server) AddHandle(pattern string, function func(http.ResponseWriter, *http.Request)) error {
+// 	if slices.Contains(s.patterns, pattern) {
+// 		return errors.New("Такой паттерн уже есть")
+// 	}
+// 	http.HandleFunc(pattern, function)
+// 	return nil
+// }
