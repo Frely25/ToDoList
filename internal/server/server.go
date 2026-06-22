@@ -2,8 +2,10 @@ package server
 
 import (
 	"ToDoList/internal/task"
+	"context"
 	"errors"
 	"net/http"
+	"time"
 
 	//"slices"
 	"strconv"
@@ -30,13 +32,20 @@ func NewServer(port string) (*Server, error) {
 		return &Server{
 			port:     port,
 			patterns: make([]string, 1),
-			httpSrv:  &http.Server{},
-			service:  &ser,
+			httpSrv: &http.Server{
+				ReadTimeout:  10 * time.Second,
+				WriteTimeout: 10 * time.Second,
+			},
+			service: &ser,
 		}, nil
 	} else {
 		// fmt.Println("Вы ввели не корректный порт")
 		return nil, errors.New("Вы ввели не корректный порт")
 	}
+}
+
+func (s *Server) ShutDown(ctx context.Context) {
+	s.httpSrv.Shutdown(ctx)
 }
 
 // func (s *Server) ServerUp() error {
@@ -45,13 +54,5 @@ func NewServer(port string) (*Server, error) {
 // 		// fmt.Println("Не предвиденная ошибка на сервере: ", err)
 // 		return err
 // 	}
-// 	return nil
-// }
-
-// func (s *Server) AddHandle(pattern string, function func(http.ResponseWriter, *http.Request)) error {
-// 	if slices.Contains(s.patterns, pattern) {
-// 		return errors.New("Такой паттерн уже есть")
-// 	}
-// 	http.HandleFunc(pattern, function)
 // 	return nil
 // }
