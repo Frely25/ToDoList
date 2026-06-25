@@ -109,16 +109,16 @@ func (ser *Service) UdpateTask(req dto.UpdateTaskRequest) (*Task, error) {
 }
 
 // Метод для удаления задачи
-func (ser *Service) DeleteTask(id int) error {
+func (ser *Service) DeleteTask(id int) (*Task, error) {
 	for i := range ser.tasks {
 		if ser.tasks[i].ID == id {
 			ser.tasks = append(ser.tasks[:i], ser.tasks[i+1:]...) // Удаление элмента
 			mess := fmt.Sprintf("Delete Task %d", id)             // Создаем сообщение для логгирования
 			ser.history.Log(mess)                                 // Логгируем
-			return nil
+			return &ser.tasks[i], nil
 		}
 	}
-	return errors.New("Index not found")
+	return nil, errors.New("Index not found")
 }
 
 func (ser *Service) GetTasks() []Task {

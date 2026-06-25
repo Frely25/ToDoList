@@ -54,9 +54,26 @@ func (s *Server) handleGetTask(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) handleDeleteTask(w http.ResponseWriter, r *http.Request) {
 	// Проверить метод
+	if r.Method != http.MethodDelete {
+		http.Error(w, "", http.StatusBadGateway)
+		return
+	}
 	// Пропарсить строку и вытянуть id
+	arrayOfPath := strings.Split(r.URL.Path, "/")
+	num, err := strconv.Atoi(arrayOfPath[len(arrayOfPath)-1])
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 	// По id через service удалить таск
+	deletedTask, err := s.service.DeleteTask(num)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 	// Вернуть ответ пользоателю
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(deletedTask)
 }
 
 func (s *Server) handleUpdateTask(w http.ResponseWriter, r *http.Request) {
