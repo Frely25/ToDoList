@@ -1,9 +1,11 @@
 package task
 
 import (
+	"ToDoList/internal/dto"
 	"ToDoList/internal/history"
 	"errors"
 	"fmt"
+	"time"
 )
 
 type Service struct {
@@ -36,21 +38,27 @@ func NewService() Service {
 }
 
 // Метод для добавления задачи
-func (ser *Service) AddTask(title string) error {
+func (ser *Service) AddTask(title string, description string) (*Task, error) {
 	// Проверяем не пустая ли новая задача
 	if title != "" {
 		// Добавляем задачу к слайсу
-		ser.tasks = append(ser.tasks, Task{
-			ID:        ser.nextId,
-			Title:     title,
-			Completed: false,
-		})
+		newTask := Task{
+			ID:           ser.nextId,
+			Title:        title,
+			Description:  description,
+			DateCreate:   time.Now(),
+			DateComplete: nil,
+			Completed:    false,
+		}
+		ser.tasks = append(ser.tasks, newTask)
+
 		mess := fmt.Sprintf("Add Task %d", ser.nextId) // Создаем сообщение для логгирования
 		ser.history.Log(mess)                          // Логгируем
 		ser.nextId++                                   // Добавляем к счетсчику 1
-		return nil
+
+		return &newTask, nil
 	} else {
-		return errors.New("Title is empty")
+		return nil, errors.New("Title is empty")
 	}
 }
 
@@ -59,7 +67,9 @@ func (ser *Service) CompleteTask(id int) error {
 	for i := 0; i < len(ser.tasks); i++ {
 		// Проверям по id
 		if ser.tasks[i].ID == id {
-			ser.tasks[i].Completed = true               // Помечаем задачу как выполненную
+			ser.tasks[i].Completed = true // Помечаем задачу как выполненную
+			now := time.Now()
+			ser.tasks[i].DateComplete = &now
 			mess := fmt.Sprintf("Complete Task %d", id) // Создаем сообщение для логгирования
 			ser.history.Log(mess)                       // Логгируем
 			return nil
@@ -70,6 +80,32 @@ func (ser *Service) CompleteTask(id int) error {
 
 func (ser *Service) CompleteTaskToTask(task *Task) {
 	task.Completed = true
+	now := time.Now()
+	task.DateComplete = &now
+}
+
+// Обновляем задачу по ID
+func (ser *Service) UdpateTask(req dto.UpdateTaskRequest) (*Task, error) {
+	for i := 0; i < len(ser.tasks); i++ {
+		if ser.tasks[i].ID == req.ID {
+			// Обновляем инфу
+			temp := &ser.tasks[i]
+			if req.Title == "" {
+				return nil, errors.New("Title is empty")
+			} else {
+				temp.Title = req.Title
+				temp.Description = req.Description
+
+				if req.Completed {
+					ser.CompleteTaskToTask(temp)
+				} else {
+					temp.Completed = req.Completed
+				}
+			}
+			return temp, nil
+		}
+	}
+	return nil, errors.New("Index not found")
 }
 
 // Метод для удаления задачи
