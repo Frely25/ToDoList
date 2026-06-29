@@ -45,17 +45,39 @@ func (s *Server) handleCreateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleGetTasks(w http.ResponseWriter, r *http.Request) {
-
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	tasks := s.service.GetTasks()
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(tasks)
 }
 
 func (s *Server) handleGetTask(w http.ResponseWriter, r *http.Request) {
-
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	arrayOfPath := strings.Split(r.URL.Path, "/")
+	num, err := strconv.Atoi(arrayOfPath[len(arrayOfPath)-1])
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	task, err := s.service.GetTaskToID(num)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(task)
 }
 
 func (s *Server) handleDeleteTask(w http.ResponseWriter, r *http.Request) {
 	// Проверить метод
 	if r.Method != http.MethodDelete {
-		http.Error(w, "", http.StatusBadGateway)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	// Пропарсить строку и вытянуть id
