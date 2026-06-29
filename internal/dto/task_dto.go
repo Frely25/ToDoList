@@ -8,6 +8,7 @@ type CreateTaskRequest struct {
 }
 
 type UpdateTaskRequest struct {
+	ID          int
 	Title       string `json:"title"`
 	Description string `json:"descriprion"`
 	Completed   bool   `json:"completed"`
