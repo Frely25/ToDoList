@@ -38,34 +38,19 @@ func NewService() Service {
 }
 
 // Метод для добавления задачи
-<<<<<<< HEAD
-func (ser *Service) AddTask(title string, description string) error {
-	// Проверяем не пустая ли новая задача
-	if title != "" {
-		// Добавляем задачу к слайсу
-		ser.tasks = append(ser.tasks, Task{
-=======
 func (ser *Service) AddTask(title string, description string) (*Task, error) {
 	// Проверяем не пустая ли новая задача
 	if title != "" {
 		// Добавляем задачу к слайсу
 		newTask := Task{
->>>>>>> 0be91021cdc05772ede5a591bb0db4f1ff0bea72
 			ID:           ser.nextId,
 			Title:        title,
 			Description:  description,
 			DateCreate:   time.Now(),
-<<<<<<< HEAD
-			DateComplete: time.Time{}, // Инициализируем нулевой временем
-			Completed:    false,
-		})
-=======
 			DateComplete: nil,
 			Completed:    false,
 		}
 		ser.tasks = append(ser.tasks, newTask)
-
->>>>>>> 0be91021cdc05772ede5a591bb0db4f1ff0bea72
 		mess := fmt.Sprintf("Add Task %d", ser.nextId) // Создаем сообщение для логгирования
 		ser.history.Log(mess)                          // Логгируем
 		ser.nextId++                                   // Добавляем к счетсчику 1
@@ -81,14 +66,9 @@ func (ser *Service) CompleteTask(id int) error {
 	for i := 0; i < len(ser.tasks); i++ {
 		// Проверям по id
 		if ser.tasks[i].ID == id {
-<<<<<<< HEAD
-			ser.tasks[i].Completed = true               // Помечаем задачу как выполненную
-			ser.tasks[i].DateComplete = time.Now()      // Устанавливаем дату выполнения
-=======
 			ser.tasks[i].Completed = true // Помечаем задачу как выполненную
 			now := time.Now()
 			ser.tasks[i].DateComplete = &now
->>>>>>> 0be91021cdc05772ede5a591bb0db4f1ff0bea72
 			mess := fmt.Sprintf("Complete Task %d", id) // Создаем сообщение для логгирования
 			ser.history.Log(mess)                       // Логгируем
 			return nil
@@ -99,9 +79,6 @@ func (ser *Service) CompleteTask(id int) error {
 
 func (ser *Service) CompleteTaskToTask(task *Task) {
 	task.Completed = true
-<<<<<<< HEAD
-	task.DateComplete = time.Now()
-=======
 	now := time.Now()
 	task.DateComplete = &now
 }
@@ -128,7 +105,6 @@ func (ser *Service) UdpateTask(req dto.UpdateTaskRequest) (*Task, error) {
 		}
 	}
 	return nil, errors.New("Index not found")
->>>>>>> 0be91021cdc05772ede5a591bb0db4f1ff0bea72
 }
 
 // Метод для удаления задачи
