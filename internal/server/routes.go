@@ -10,7 +10,7 @@ func (s *Server) RegisterRoutes() error {
 	routes := map[string]func(w http.ResponseWriter, r *http.Request){
 		"GET tasks/":        s.handleGetTasks,
 		"GET tasks/{id}":    s.handleGetTask,
-		"POST tasks/{id}":   s.handleCreateTask,
+		"POST tasks/":       s.handleCreateTask,
 		"DELETE tasks/{id}": s.handleDeleteTask,
 		"PATCH tasks/{id}":  s.handleUpdateTask,
 	}
