@@ -4,6 +4,7 @@ import (
 	"ToDoList/internal/history"
 	"errors"
 	"fmt"
+	"time"
 )
 
 type Service struct {
@@ -36,14 +37,17 @@ func NewService() Service {
 }
 
 // Метод для добавления задачи
-func (ser *Service) AddTask(title string) error {
+func (ser *Service) AddTask(title string, description string) error {
 	// Проверяем не пустая ли новая задача
 	if title != "" {
 		// Добавляем задачу к слайсу
 		ser.tasks = append(ser.tasks, Task{
-			ID:        ser.nextId,
-			Title:     title,
-			Completed: false,
+			ID:           ser.nextId,
+			Title:        title,
+			Description:  description,
+			DateCreate:   time.Now(),
+			DateComplete: time.Time{}, // Инициализируем нулевой временем
+			Completed:    false,
 		})
 		mess := fmt.Sprintf("Add Task %d", ser.nextId) // Создаем сообщение для логгирования
 		ser.history.Log(mess)                          // Логгируем
@@ -60,6 +64,7 @@ func (ser *Service) CompleteTask(id int) error {
 		// Проверям по id
 		if ser.tasks[i].ID == id {
 			ser.tasks[i].Completed = true               // Помечаем задачу как выполненную
+			ser.tasks[i].DateComplete = time.Now()      // Устанавливаем дату выполнения
 			mess := fmt.Sprintf("Complete Task %d", id) // Создаем сообщение для логгирования
 			ser.history.Log(mess)                       // Логгируем
 			return nil
@@ -70,6 +75,7 @@ func (ser *Service) CompleteTask(id int) error {
 
 func (ser *Service) CompleteTaskToTask(task *Task) {
 	task.Completed = true
+	task.DateComplete = time.Now()
 }
 
 // Метод для удаления задачи

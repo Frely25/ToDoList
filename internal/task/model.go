@@ -1,12 +1,14 @@
 package task
 
+import "time"
+
 type Task struct {
-	ID    int    // Айдишник
-	Title string // Название
-	//  Description  // Описание
-	//  DateCreate   // Дата создание
-	//  DateComplete // Дата Выполнения
-	Completed bool // Выполнена ли
+	ID           int       // Айдишник
+	Title        string    // Название
+	Description  string    // Описание
+	DateCreate   time.Time // Дата создание
+	DateComplete time.Time // Дата Выполнения
+	Completed    bool      // Выполнена ли
 }
 
 func (task Task) GetID() int {
