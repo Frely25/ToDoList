@@ -51,6 +51,7 @@ func (ser *Service) AddTask(title string, description string) (*Task, error) {
 			Completed:    false,
 		}
 		ser.tasks = append(ser.tasks, newTask)
+
 		mess := fmt.Sprintf("Add Task %d", ser.nextId) // Создаем сообщение для логгирования
 		ser.history.Log(mess)                          // Логгируем
 		ser.nextId++                                   // Добавляем к счетсчику 1
