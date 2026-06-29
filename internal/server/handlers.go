@@ -3,6 +3,7 @@ package server
 import (
 	"ToDoList/internal/dto"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -11,6 +12,7 @@ import (
 
 func (s *Server) handleCreateTask(w http.ResponseWriter, r *http.Request) {
 	// Проверка на метод запроса
+	fmt.Println("Отработал отладчик CreateTask")
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -45,6 +47,7 @@ func (s *Server) handleCreateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleGetTasks(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Отработал отладчик GetTasks")
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -55,6 +58,7 @@ func (s *Server) handleGetTasks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleGetTask(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Отработал отладчик GetTask")
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -75,6 +79,7 @@ func (s *Server) handleGetTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleDeleteTask(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Отработал отладчик DeleteTask")
 	// Проверить метод
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -99,6 +104,7 @@ func (s *Server) handleDeleteTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleUpdateTask(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Отработал отладчик UpdateTask")
 	// Проверить метод
 	if r.Method != http.MethodPatch {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -126,4 +132,18 @@ func (s *Server) handleUpdateTask(w http.ResponseWriter, r *http.Request) {
 	// Вернуть ответ с новым таском
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(newTask)
+}
+
+func (s *Server) handleClearHistory(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Отработал отладчик ClearHistory")
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	if err := s.service.ClearHistory(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("History is clear"))
 }

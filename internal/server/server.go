@@ -4,6 +4,7 @@ import (
 	"ToDoList/internal/task"
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -44,15 +45,15 @@ func NewServer(port string) (*Server, error) {
 	}
 }
 
-func (s *Server) ShutDown(ctx context.Context) {
-	s.httpSrv.Shutdown(ctx)
+func (s *Server) ShutDown(ctx context.Context) error {
+	if err := s.service.Completion(); err != nil {
+		fmt.Println("\nПроизошла ошибка при сохранении: ", err)
+		return err
+	}
+	return s.httpSrv.Shutdown(ctx)
 }
 
-// func (s *Server) ServerUp() error {
-// 	// fmt.Println("Сервер запускается...")
-// 	if err := http.ListenAndServe(":"+s.port, nil); err != nil {
-// 		// fmt.Println("Не предвиденная ошибка на сервере: ", err)
-// 		return err
-// 	}
-// 	return nil
-// }
+func (s *Server) ServerUp() error {
+	s.httpSrv.Addr = ":" + s.port
+	return s.httpSrv.ListenAndServe()
+}

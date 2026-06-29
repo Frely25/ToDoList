@@ -4,13 +4,13 @@ import "time"
 
 type CreateTaskRequest struct {
 	Title       string `json:"title"`
-	Description string `json:"descriprion"`
+	Description string `json:"description"`
 }
 
 type UpdateTaskRequest struct {
 	ID          int
 	Title       string `json:"title"`
-	Description string `json:"descriprion"`
+	Description string `json:"description"`
 	Completed   bool   `json:"completed"`
 }
 

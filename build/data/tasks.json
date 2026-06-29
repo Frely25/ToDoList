@@ -2,16 +2,41 @@
 	{
 		"ID": 0,
 		"Title": "qwe",
+		"Description": "",
+		"DateCreate": "0001-01-01T00:00:00Z",
+		"DateComplete": null,
 		"Completed": true
 	},
 	{
 		"ID": 1,
 		"Title": "ewq",
+		"Description": "",
+		"DateCreate": "0001-01-01T00:00:00Z",
+		"DateComplete": null,
 		"Completed": false
 	},
 	{
 		"ID": 2,
 		"Title": "weq",
+		"Description": "",
+		"DateCreate": "0001-01-01T00:00:00Z",
+		"DateComplete": null,
+		"Completed": false
+	},
+	{
+		"ID": 3,
+		"Title": "МегаЗадача",
+		"Description": "",
+		"DateCreate": "2026-06-29T20:04:25.9066968+03:00",
+		"DateComplete": null,
+		"Completed": false
+	},
+	{
+		"ID": 4,
+		"Title": "МегаЗадача2",
+		"Description": "Сделать мегазадачу2",
+		"DateCreate": "2026-06-29T20:17:51.8260692+03:00",
+		"DateComplete": null,
 		"Completed": false
 	}
 ]

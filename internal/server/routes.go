@@ -8,11 +8,14 @@ import (
 
 func (s *Server) RegisterRoutes() error {
 	routes := map[string]func(w http.ResponseWriter, r *http.Request){
-		"GET tasks/":        s.handleGetTasks,
-		"GET tasks/{id}":    s.handleGetTask,
-		"POST tasks/":       s.handleCreateTask,
-		"DELETE tasks/{id}": s.handleDeleteTask,
-		"PATCH tasks/{id}":  s.handleUpdateTask,
+		"GET /tasks":         s.handleGetTasks,
+		"GET /tasks/{id}":    s.handleGetTask,
+		"POST /tasks/":       s.handleCreateTask,
+		"DELETE /tasks/{id}": s.handleDeleteTask,
+		"PATCH /tasks/{id}":  s.handleUpdateTask,
+		//	"GET /histories": s.handleGetHistory,
+		"DELETE /histories": s.handleClearHistory,
+		//  "DELETE /tasks": s.handleClearTasksOfList,
 	}
 
 	for pattern, handle := range routes {

@@ -139,16 +139,19 @@ func (ser *Service) ClearListOfTask() bool {
 	return false
 }
 
-func (ser *Service) ClearHistory() bool {
-	if ser.history.ClearHistory() != nil {
-		return false
+func (ser *Service) ClearHistory() error {
+	if err := ser.history.ClearHistory(); err != nil {
+		return err
 	}
-	return true
+	return nil
 }
 
-func (ser *Service) Completion() {
-	ser.storage.Save(ser.tasks, ser.nextId)
+func (ser *Service) Completion() error {
+	if err := ser.storage.Save(ser.tasks, ser.nextId); err != nil {
+		return err
+	}
 	ser.history.Log("Application has shut down")
+	return nil
 }
 
 func (ser *Service) GetTaskToID(id int) (*Task, error) {
