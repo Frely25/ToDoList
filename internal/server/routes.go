@@ -13,9 +13,9 @@ func (s *Server) RegisterRoutes() error {
 		"POST /tasks/":       s.handleCreateTask,
 		"DELETE /tasks/{id}": s.handleDeleteTask,
 		"PATCH /tasks/{id}":  s.handleUpdateTask,
-		//	"GET /histories": s.handleGetHistory,
-		"DELETE /histories": s.handleClearHistory,
-		//  "DELETE /tasks": s.handleClearTasksOfList,
+		"GET /histories":     s.handleGetHistory,
+		"DELETE /histories":  s.handleClearHistory,
+		"DELETE /tasks":      s.handleClearTasksOfList,
 	}
 
 	for pattern, handle := range routes {

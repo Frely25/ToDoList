@@ -129,14 +129,16 @@ func (ser *Service) GetHistory() ([]string, error) {
 	return ser.history.GetHistory()
 }
 
-func (ser *Service) ClearListOfTask() bool {
-	if err := ser.storage.clearTasks(); err == nil {
+func (ser *Service) ClearListOfTask() error {
+	err := ser.storage.clearTasks()
+	if err == nil {
 		ser.tasks = []Task{}
 		ser.nextId = 0
 		ser.history.Log("List of tasks is clear")
-		return true
+		return nil
+	} else {
+		return err
 	}
-	return false
 }
 
 func (ser *Service) ClearHistory() error {

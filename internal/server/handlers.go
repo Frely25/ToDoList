@@ -147,3 +147,38 @@ func (s *Server) handleClearHistory(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("History is clear"))
 }
+
+func (s *Server) handleGetHistory(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Отработал отладчик handleGetHistory")
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	history, err := s.service.GetHistory()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	str := ""
+	for _, s := range history {
+		str += s + "\n"
+	}
+	w.Write([]byte(str))
+
+}
+
+func (s *Server) handleClearTasksOfList(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Отработал отладчик handleClearTasksOfList")
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	if err := s.service.ClearListOfTask(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+}
